@@ -7,9 +7,9 @@ import {
   HomePageRandomJoke,
   WelcomeTitle,
 } from '@backstage/plugin-home';
-import { HomePageSearchBar } from '@backstage/plugin-search';
 import { SearchContextProvider } from '@backstage/plugin-search-react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Stack } from '@mui/material';
 import { TemplateBackstageLogoIcon } from '@backstage/plugin-home';
 
 export const useLogoStyles = makeStyles(theme => ({
@@ -53,42 +53,39 @@ export const tools = [
   },
 ];
 
-const useStyles = makeStyles(theme => ({
-  searchBarInput: {
-    maxWidth: '60vw',
-    margin: 'auto',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: '50px',
-    boxShadow: theme.shadows[1],
-  },
-  searchBarOutline: {
-    borderStyle: 'none',
-  },
-}));
+const HomeHeader = () => {
+  let lang = ["English"]
+  return (
+    <Stack spacing={1} direction={"column"}>
+      Home
+      <Typography variant="body2" color="inherit" style={{paddingTop: "10px"}}>
+        <WelcomeTitle language={lang} />
+      </Typography>
+    </Stack>
+  )
+};
 
 export const HomePage = () => {
-    let lang = ["English"]
-
     return (
         <SearchContextProvider>
             <Page themeId="home">
-                <Header title={<WelcomeTitle language={lang} />} />
+                <Header title={<HomeHeader />} />
                 <Content>
                     <Grid container justifyContent="center" spacing={2}>
                         <Grid container item xs={12}>
-                            <Grid item xs={3} container spacing={2} direction="column">
-                                <Grid item>
-                                    <HomePageTopVisited />
-                                </Grid>
+                            <Grid item xs={4} container spacing={2} direction="column">
                                 <Grid item>
                                     <HomePageRecentlyVisited />
+                                </Grid>
+                                <Grid item>
+                                    <HomePageTopVisited />
                                 </Grid>
                                 <Grid item>
                                     <HomePageRandomJoke />
                                 </Grid>
                             </Grid>
 
-                            <Grid item xs={9} container spacing={2} direction="column">
+                            <Grid item xs={8} container spacing={2} direction="column">
                                 <Grid item>
                                     <HomePageToolkit tools={tools} />
                                 </Grid>
